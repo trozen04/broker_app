@@ -170,3 +170,92 @@ class CustomConfirmationDialog {
   }
 }
 
+// ReusableDropdown widget
+class ReusableDropdown extends StatelessWidget {
+  final List<String> items;
+  final String? value;
+  final Function(String?) onChanged;
+  final String? Function(String?)? validator;
+
+  const ReusableDropdown({
+    super.key,
+    required this.items,
+    required this.value,
+    required this.onChanged,
+    this.validator,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        isDense: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        errorStyle: const TextStyle(
+          height: 1, // reduce vertical gap
+          color: Colors.red,
+        ),
+        errorMaxLines: 2,
+      ),
+      value: value,
+      items: items
+          .map((item) => DropdownMenuItem<String>(
+        value: item,
+        child: Text(item, style: AppTextStyles.hintText),
+      ))
+          .toList(),
+      onChanged: onChanged,
+      validator: validator,
+      hint: Text('Select option', style: AppTextStyles.hintText),
+    );
+  }
+}
+
+class ReusablePopup extends StatelessWidget {
+  final String title;
+  final String message;
+  final String buttonText;
+  final VoidCallback onButtonPressed;
+  final double height;
+  final double width;
+
+  ReusablePopup({
+    required this.title,
+    required this.message,
+    required this.buttonText,
+    required this.onButtonPressed, required this.height, required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: width * 0.2, vertical: height * 0.035),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.popupTitle,
+            ),
+            AppDimensions.h20(context),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.bodyText,
+              maxLines: 3,
+            ),
+            AppDimensions.h20(context),
+            PrimaryButton(text: 'okay', onPressed: onButtonPressed)
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -118,6 +118,11 @@ class AppTextStyles {
     color: AppColors.labelColor,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle popupTitle = GoogleFonts.poppins(
+    fontSize: 20,
+    color: AppColors.labelColor,
+    fontWeight: FontWeight.w600,
+  );
 
 
 }

@@ -7,7 +7,7 @@ import '../../../Constants/app_dimensions.dart';
 import '../../../utils/app_routes.dart';
 import '../../../widgets/CustomCards/homeInfoCard.dart';
 import '../../../widgets/custom_snackbar.dart';
-import '../../../widgets/reusable_functions.dart'; // For formatting date
+import '../../../widgets/reusable_functions.dart';
 
 class PurchaseRequests extends StatefulWidget {
   const PurchaseRequests({super.key});
@@ -53,12 +53,7 @@ class _PurchaseRequestsState extends State<PurchaseRequests> {
   }
 
   void _addNewLead() {
-    // Your logic to add a new lead
-    CustomSnackBar.show(
-      context,
-      message: "This functionality is not available.",
-      isError: true,
-    );
+    Navigator.pushNamed(context, AppRoutes.addNewPurchaseRequestPage);
   }
 
   @override

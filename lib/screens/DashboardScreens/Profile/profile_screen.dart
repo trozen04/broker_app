@@ -39,9 +39,7 @@ class ProfileScreen extends StatelessWidget {
 
                 // Handle user response
                 if (confirm) {
-                  // User confirmed
-                  PrefUtils.clearPrefs(); // clear shared preferences
-                  // Navigate to login screen or another screen
+                  PrefUtils.clearPrefs();
                   Navigator.pushReplacementNamed(context, '/login');
                 }
               },

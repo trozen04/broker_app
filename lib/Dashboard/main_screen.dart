@@ -15,12 +15,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static int _selectedIndex = 0; // Use static to persist across hot reloads
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    // Only set _selectedIndex to initialIndex if it hasn't been set yet
     _selectedIndex = _selectedIndex == 0 ? widget.initialIndex : _selectedIndex;
   }
 

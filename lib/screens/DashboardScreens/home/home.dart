@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> transportations = [
     {
       'cardType': CardType.transportation,
-      'name': 'Baldev',
+      'name': 'Ramesh yadav',
       'date': '12-09-25',
       'location': 'Gwalior, MP',
       'quantity': '50 Qntl',
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.loadDetailsPage, arguments: data);
+                    Navigator.pushNamed(context, AppRoutes.transportDetailsPage, arguments: data);
                   },
                   child: HomeInfoCard(
                     cardType: data['cardType'],

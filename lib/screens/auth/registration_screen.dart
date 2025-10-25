@@ -7,6 +7,7 @@ import '../../utils/image_assets.dart';
 import '../../widgets/custom_snackbar.dart' show CustomSnackBar;
 import '../../widgets/custom_text_form_field.dart';
 import '../../widgets/primary_button.dart';
+import '../../widgets/reusable_functions.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -65,7 +66,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  /// Handler for the "Register" button
   Future<void> _register() async {
     // Hide keyboard
     FocusScope.of(context).unfocus();
@@ -75,15 +75,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       setState(() => _isLoading = true);
 
       // Simulate a network request
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
 
-      CustomSnackBar.show(
-        context,
-        message: "Registration Successful!",
-        isError: false,
+      showDialog(
+        context: context,
+        builder: (context) => ReusablePopup(
+          title: 'Thank you',
+          message: 'Please wait till admin review your profile.',
+          buttonText: 'Okay',
+          onButtonPressed: () {
+            Navigator.pop(context);
+          },
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+        ),
       );
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 0,)));
-
       setState(() => _isLoading = false);
     }
   }

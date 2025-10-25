@@ -58,7 +58,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
     }
   }
 
-  void _addNewLead() {
+  void _filter() {
     CustomSnackBar.show(
       context,
       message: "This functionality is not available.",
@@ -118,7 +118,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                 const SizedBox(width: 10),
 
                 CustomRoundedButton(
-                  onTap: _addNewLead,
+                  onTap: _filter,
                   child: Row(
                     children: [
                       Text('Filter', style: AppTextStyles.dateText),
@@ -130,7 +130,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                 const SizedBox(width: 10),
 
                 CustomRoundedButton(
-                  onTap: _addNewLead,
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.newTransportationScreen),
                   child: Text('New Transportation', style: AppTextStyles.dateText),
                 ),
               ],
@@ -148,7 +148,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                 padding: EdgeInsets.only(bottom: AppDimensions.h10(context).height!),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.loadDetailsPage, arguments: data);
+                    Navigator.pushNamed(context, AppRoutes.transportDetailsPage, arguments: data);
                   },
                   child: HomeInfoCard(
                     cardType: data['cardType'],
