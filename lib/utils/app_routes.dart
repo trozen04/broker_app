@@ -3,6 +3,7 @@ import 'package:shree_ram_broker/screens/DetailsPages/loadDetailsPage.dart';
 import 'package:shree_ram_broker/screens/NewPurchaseRequest/add_new_purchase_request.dart';
 import 'package:shree_ram_broker/screens/auth/login_screen.dart';
 import '../screens/DashboardScreens/home/home.dart';
+import '../screens/Notification/notification_screen.dart';
 import '../screens/Transportation/new_transportation_screen.dart';
 import '../screens/Transportation/transport_details_page.dart';
 import '../screens/Transportation/transport_submit_page.dart';
@@ -17,6 +18,7 @@ class AppRoutes {
   static const String transportDetailsPage = '/transportDetailsPage';
   static const String addNewPurchaseRequestPage = '/addNewPurchaseRequestPage';
   static const String newTransportationScreen = '/newTransportationScreen';
+  static const String notificationScreen = '/notificationScreen';
 
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -49,6 +51,8 @@ class AppRoutes {
         return _buildPageRoute(const AddNewPurchaseRequest(), settings);
       case newTransportationScreen:
         return _buildPageRoute(const NewTransportationScreen(), settings);
+      case notificationScreen:
+        return _buildPageRoute(const NotificationScreen(), settings);
 
 
       default:

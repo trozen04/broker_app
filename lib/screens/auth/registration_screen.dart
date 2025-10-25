@@ -225,7 +225,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Text("Have an account? ", style: AppTextStyles.bodyText),
                     GestureDetector(
                       onTap: () {
-                       // Navigator.of(context).pushNamed('/login');
                         Navigator.pop(context);
                       },
                       child: Text("Login", style: AppTextStyles.linkText),

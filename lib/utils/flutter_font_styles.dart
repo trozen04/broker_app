@@ -123,6 +123,17 @@ class AppTextStyles {
     color: AppColors.labelColor,
     fontWeight: FontWeight.w600,
   );
+  static final TextStyle dateAndTime = GoogleFonts.poppins(
+    fontSize: 12,
+    color: AppColors.labelColor,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle timeLeft = GoogleFonts.poppins(
+    fontSize: 10,
+    color: AppColors.labelColor,
+    fontWeight: FontWeight.w400,
+  );
 
 
 }

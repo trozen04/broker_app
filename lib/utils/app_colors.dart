@@ -12,6 +12,7 @@ class AppColors {
   static const Color cardBorder = Color(0xFFCCCCCC);
   static const Color pendingColor = Color(0xFFCBBD00);
   static const Color logoutColor = Color(0xFFCC0000);
+  static const Color bottomBorder = Color(0xFFEBEBEB);
 
   static const Color textColor = Colors.black87;
   static const Color hintColor = Colors.grey;

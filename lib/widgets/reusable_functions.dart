@@ -259,3 +259,57 @@ class ReusablePopup extends StatelessWidget {
     );
   }
 }
+
+class ReusableNotificationCard extends StatelessWidget {
+  final String title;
+  final String time;
+  final double height;
+  final double width;
+
+  const ReusableNotificationCard({
+    super.key,
+    required this.title,
+    required this.time,
+    required this.height,
+    required this.width
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+     padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+     decoration: BoxDecoration(
+       border: Border(
+         bottom: BorderSide(
+           color: AppColors.bottomBorder
+         )
+       )
+     ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Notification 1', style: AppTextStyles.label),
+              AppDimensions.h10(context),
+              Text('Monday, 4:41 pm', style: AppTextStyles.dateAndTime)
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if(true) Icon(Icons.circle, size: 10, color: AppColors.primaryColor,)
+              else Text(''),
+              AppDimensions.h10(context),
+              Text('3 Hours ago', style: AppTextStyles.timeLeft)
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}

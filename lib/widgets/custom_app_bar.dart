@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shree_ram_broker/utils/image_assets.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_routes.dart';
 import '../utils/flutter_font_styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -72,10 +73,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
 
                     // Right side: notification icon
-                    Image.asset(
-                      ImageAssets.homeScreenNotificationIcon,
-                      width: screenWidth * 0.1,
-                      height: screenWidth * 0.1,
+                    InkWell(
+                      onTap: () => Navigator.pushNamed(context, AppRoutes.notificationScreen),
+                      child: Image.asset(
+                        ImageAssets.homeScreenNotificationIcon,
+                        width: screenWidth * 0.1,
+                        height: screenWidth * 0.1,
+                      ),
                     ),
                   ],
                 )
