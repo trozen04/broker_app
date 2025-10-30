@@ -29,16 +29,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           bottomRight: Radius.circular(screenHeight * 0.035),
         ),
         child: Container(
-          decoration: BoxDecoration(
-            gradient: AppGradients.purpleGradient,
-          ),
+          decoration: BoxDecoration(gradient: AppGradients.purpleGradient),
           padding: EdgeInsets.only(
             left: screenWidth * 0.04,
             right: screenWidth * 0.04,
             bottom: screenHeight * 0.03,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end, // sticks content to bottom
+            mainAxisAlignment:
+                MainAxisAlignment.end, // sticks content to bottom
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (isHomePage)
@@ -60,12 +59,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Text(
                               'Good Morning',
                               style: AppTextStyles.bodyText.copyWith(
-                                color: Colors.white
+                                color: Colors.white,
                               ),
                             ),
                             Text(
                               'Rahul Sharma',
-                              style: AppTextStyles.appbarName
+                              style: AppTextStyles.appbarName,
                             ),
                           ],
                         ),
@@ -74,7 +73,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
                     // Right side: notification icon
                     InkWell(
-                      onTap: () => Navigator.pushNamed(context, AppRoutes.notificationScreen),
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        AppRoutes.notificationScreen,
+                      ),
                       child: Image.asset(
                         ImageAssets.homeScreenNotificationIcon,
                         width: screenWidth * 0.1,
@@ -84,12 +86,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 )
               else
-                Center(
-                  child: Text(
-                    title,
-                    style: AppTextStyles.buttonText
-                  ),
-                ),
+                Center(child: Text(title, style: AppTextStyles.buttonText)),
             ],
           ),
         ),

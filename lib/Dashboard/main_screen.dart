@@ -37,8 +37,14 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
         isHomePage: currentIndex == 0,
-        title: ['Home', 'Purchase Requests', 'Transportation', 'Profile'][currentIndex],
-        preferredHeight: MediaQuery.of(context).size.height *
+        title: [
+          'Home',
+          'Purchase Requests',
+          'Transportation',
+          'Profile',
+        ][currentIndex],
+        preferredHeight:
+            MediaQuery.of(context).size.height *
             (currentIndex == 0 ? 0.15 : 0.12),
       ),
       body: IndexedStack(

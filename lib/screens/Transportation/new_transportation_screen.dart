@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:shree_ram_broker/utils/flutter_font_styles.dart';
+import 'package:shree_ram_broker/utils/image_assets.dart';
 import 'package:shree_ram_broker/widgets/primary_button.dart';
 import 'package:shree_ram_broker/widgets/reusable_appbar.dart';
 import '../../Constants/app_dimensions.dart';
+import '../../utils/app_colors.dart';
 import '../../widgets/custom_snackbar.dart';
 import '../../widgets/reusable_functions.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,7 +15,8 @@ class NewTransportationScreen extends StatefulWidget {
   const NewTransportationScreen({super.key});
 
   @override
-  State<NewTransportationScreen> createState() => _NewTransportationScreenState();
+  State<NewTransportationScreen> createState() =>
+      _NewTransportationScreenState();
 }
 
 class _NewTransportationScreenState extends State<NewTransportationScreen> {
@@ -46,8 +49,6 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
       'status': 'Pending',
     };
 
-
-
     return Scaffold(
       appBar: const ReusableAppBar(title: 'New Transportation'),
       body: SingleChildScrollView(
@@ -63,6 +64,7 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
               Text('Leads', style: AppTextStyles.label),
               AppDimensions.h5(context),
               ReusableDropdown(
+                hintText: 'Select Lead',
                 items: ['Lead 1', 'Lead 2', 'Lead 3'],
                 value: selectedLead,
                 onChanged: (val) => setState(() => selectedLead = val),
@@ -86,20 +88,24 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
               Text('Factory', style: AppTextStyles.label),
               AppDimensions.h5(context),
               ReusableDropdown(
+                hintText: 'Select Factory',
                 items: ['Factory 1', 'Factory 2', 'Factory 3'],
                 value: selectedFactory,
                 onChanged: (val) => setState(() => selectedFactory = val),
-                validator: (val) => val == null ? 'Please select Factory' : null,
+                validator: (val) =>
+                    val == null ? 'Please select Factory' : null,
               ),
               AppDimensions.h10(context),
 
               Text('Transport Mode', style: AppTextStyles.label),
               AppDimensions.h5(context),
               ReusableDropdown(
+                hintText: 'Select Transport Mode',
                 items: ['Truck', 'Train', 'Ship'],
                 value: transportMode,
                 onChanged: (val) => setState(() => transportMode = val),
-                validator: (val) => val == null ? 'Please select Transport Mode' : null,
+                validator: (val) =>
+                    val == null ? 'Please select Transport Mode' : null,
               ),
               AppDimensions.h10(context),
 
@@ -191,8 +197,10 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
               title: const Text('Camera'),
               onTap: () async {
                 Navigator.of(context).pop();
-                final XFile? pickedFile =
-                await _picker.pickImage(source: ImageSource.camera, imageQuality: 80);
+                final XFile? pickedFile = await _picker.pickImage(
+                  source: ImageSource.camera,
+                  imageQuality: 80,
+                );
                 if (pickedFile != null) {
                   setState(() => uploadedPhoto = File(pickedFile.path));
                 }
@@ -203,8 +211,10 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
               title: const Text('Gallery'),
               onTap: () async {
                 Navigator.of(context).pop();
-                final XFile? pickedFile =
-                await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+                final XFile? pickedFile = await _picker.pickImage(
+                  source: ImageSource.gallery,
+                  imageQuality: 80,
+                );
                 if (pickedFile != null) {
                   setState(() => uploadedPhoto = File(pickedFile.path));
                 }
@@ -216,18 +226,26 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
     );
   }
 
-  Widget _buildSectionTitle(String title) => Text(
-    title,
-    style: AppTextStyles.appbarTitle,
-  );
+  Widget _buildSectionTitle(String title) =>
+      Text(title, style: AppTextStyles.appbarTitle);
 
   Widget _buildReadOnlyField(String label, String value) => Padding(
-    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.012),
+    padding: EdgeInsets.only(
+      bottom: MediaQuery.of(context).size.height * 0.012,
+    ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: AppTextStyles.bodyText, overflow: TextOverflow.ellipsis,),
-        Text(value, style: AppTextStyles.profileDataText, overflow: TextOverflow.ellipsis,),
+        Text(
+          label,
+          style: AppTextStyles.bodyText,
+          overflow: TextOverflow.ellipsis,
+        ),
+        Text(
+          value,
+          style: AppTextStyles.profileDataText,
+          overflow: TextOverflow.ellipsis,
+        ),
       ],
     ),
   );
@@ -247,7 +265,10 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
           decoration: InputDecoration(
             hintText: hint,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.035,
+              vertical: MediaQuery.of(context).size.height * 0.015,
+            ),
           ),
           onChanged: onChanged,
           validator: validator,
@@ -261,6 +282,9 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
     DateTime? selectedDate,
     required VoidCallback onTap,
   }) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -271,11 +295,34 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
           child: InputDecorator(
             decoration: InputDecoration(
               hintText: 'Select Delivery Date',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              suffixIcon: const Icon(Icons.calendar_today),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: width * 0.035,
+                vertical: height * 0.015,
+              ),
+              // ✅ Use suffixIcon (auto-centered vertically)
+              suffixIcon: Padding(
+                padding: EdgeInsets.only(right: width * 0.02),
+                child: Image.asset(
+                  ImageAssets.calender,
+                  height: height * 0.03,
+                  width: height * 0.03,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              suffixIconConstraints: BoxConstraints(
+                maxHeight: height * 0.04,
+                maxWidth: height * 0.04,
+              ),
             ),
-            child: Text(selectedDate == null ? 'Select Delivery Date' : selectedDate.toString().split(' ')[0]),
+            child: Text(
+              selectedDate == null
+                  ? 'Select Delivery Date'
+                  : selectedDate.toString().split(' ')[0],
+              style: AppTextStyles.bodyText,
+            ),
           ),
         ),
       ],
@@ -283,6 +330,9 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
   }
 
   Widget _buildUploadField(String label) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -293,30 +343,48 @@ class _NewTransportationScreenState extends State<NewTransportationScreen> {
           child: InputDecorator(
             decoration: InputDecoration(
               hintText: 'Upload',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              suffixIcon: const Icon(Icons.upload),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: width * 0.035,
+                vertical: height * 0.015,
+              ),
+              // 👇 use suffixIcon instead of suffix
+              suffixIcon: Padding(
+                padding: EdgeInsets.only(right: width * 0.02),
+                child: Image.asset(
+                  ImageAssets.uploadIcon,
+                  height: height * 0.03,
+                  width: height * 0.03,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              suffixIconConstraints: BoxConstraints(
+                maxHeight: height * 0.04,
+                maxWidth: height * 0.04,
+              ),
             ),
             child: uploadedPhoto == null
                 ? Text('Upload')
                 : Row(
-              children: [
-                Image.file(
-                  uploadedPhoto!,
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    uploadedPhoto!.path.split('/').last,
-                    style: AppTextStyles.bodyText,
-                    overflow: TextOverflow.ellipsis,
+                    children: [
+                      Image.file(
+                        uploadedPhoto!,
+                        width: height * 0.04,
+                        height: height * 0.04,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          uploadedPhoto!.path.split('/').last,
+                          style: AppTextStyles.bodyText,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ],

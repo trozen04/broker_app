@@ -16,13 +16,13 @@ class TransportDetailsPage extends StatelessWidget {
 
     final data = userData;
 
-
     return Scaffold(
-      appBar: ReusableAppBar(
-        title: data['name'] ?? 'Details',
-      ),
+      appBar: ReusableAppBar(title: data['name'] ?? 'Details'),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,26 +31,32 @@ class TransportDetailsPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    data['name'],
-                    style: AppTextStyles.cardHeading,
-                  ),
+                  Text(data['name'], style: AppTextStyles.cardHeading),
                   //if (data['contactNumber'] != null && data['contactNumber'].toString().isNotEmpty)
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.01),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor.withOpacity(0.16),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.call, color: AppColors.primaryColor, size: width * 0.045),
-                        SizedBox(width: 4),
-                        Text(
-                          'Call now',
-                          style: AppTextStyles.bodyText,
-                        ),
-                      ],
+                  InkWell(
+                    onTap: () {
+                      makePhoneCall('9999999999', context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.035,
+                        vertical: height * 0.01,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor.withOpacity(0.16),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.call,
+                            color: AppColors.primaryColor,
+                            size: width * 0.045,
+                          ),
+                          SizedBox(width: 4),
+                          Text('Call now', style: AppTextStyles.bodyText),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -77,5 +83,6 @@ class TransportDetailsPage extends StatelessWidget {
 
 // Extension to capitalize first letter
 extension StringCasingExtension on String {
-  String capitalize() => isEmpty ? '' : '${this[0].toUpperCase()}${substring(1)}';
+  String capitalize() =>
+      isEmpty ? '' : '${this[0].toUpperCase()}${substring(1)}';
 }

@@ -105,11 +105,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+          padding: EdgeInsets.symmetric(
+            horizontal: width * 0.035,
+            vertical: height * 0.015,
+          ),
           child: Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // align labels to left
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // align labels to left
               children: [
                 AppDimensions.h100(context),
                 Align(
@@ -133,22 +137,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   prefixImagePath: ImageAssets.callImage,
                   prefix: Padding(
                     padding: const EdgeInsets.only(right: 6),
-                    child: Text(
-                      '+91',
-                        style: AppTextStyles.hintText
-                    ),
+                    child: Text('+91', style: AppTextStyles.hintText),
                   ),
                   keyboardType: TextInputType.phone,
                   suffix: TextButton(
                     onPressed: _getOtp,
                     child: Text(
                       _isOtpSent ? 'Resend OTP' : 'Get OTP',
-                      style:AppTextStyles.hintText.copyWith(fontSize: 10),
+                      style: AppTextStyles.hintText.copyWith(fontSize: 10),
                     ),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'Phone number is required';
-                    if (value.length != 10) return 'Enter a valid 10-digit number';
+                    if (value == null || value.isEmpty)
+                      return 'Phone number is required';
+                    if (value.length != 10)
+                      return 'Enter a valid 10-digit number';
                     return null;
                   },
                 ),
@@ -163,7 +166,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   prefixImagePath: ImageAssets.passwordImage,
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'OTP is required';
+                    if (value == null || value.isEmpty)
+                      return 'OTP is required';
                     if (value.length < 4) return 'Enter a valid OTP';
                     return null;
                   },
@@ -176,7 +180,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 CustomTextFormField(
                   controller: _nameController,
                   hintText: 'Enter Name',
-                  validator: (value) => value == null || value.isEmpty ? 'Name is required' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Name is required'
+                      : null,
                 ),
                 AppDimensions.h10(context),
 
@@ -186,7 +192,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 CustomTextFormField(
                   controller: _addressController,
                   hintText: 'Enter Address',
-                  validator: (value) => value == null || value.isEmpty ? 'Address is required' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Address is required'
+                      : null,
                 ),
                 AppDimensions.h10(context),
 
@@ -196,7 +204,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 CustomTextFormField(
                   controller: _stateController,
                   hintText: 'Enter State',
-                  validator: (value) => value == null || value.isEmpty ? 'State is required' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'State is required'
+                      : null,
                 ),
                 AppDimensions.h10(context),
 
@@ -206,7 +216,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 CustomTextFormField(
                   controller: _cityController,
                   hintText: 'Enter City',
-                  validator: (value) => value == null || value.isEmpty ? 'City is required' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'City is required'
+                      : null,
                 ),
                 AppDimensions.h30(context),
 
@@ -234,8 +246,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 AppDimensions.h30(context),
               ],
             ),
-          )
-
+          ),
         ),
       ),
     );

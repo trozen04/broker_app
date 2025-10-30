@@ -15,7 +15,10 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,4 +55,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-

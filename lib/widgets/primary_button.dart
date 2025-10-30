@@ -8,6 +8,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isLoading;
   final bool isLogout;
+  final bool? isLogoutText;
 
   const PrimaryButton({
     super.key,
@@ -15,6 +16,7 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.isLogout = false,
+    this.isLogoutText = false,
   });
 
   @override
@@ -25,7 +27,9 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isLogout ? AppColors.logoutColor : AppColors.primaryColor,
+          backgroundColor: isLogout
+              ? AppColors.logoutColor
+              : AppColors.primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -33,26 +37,29 @@ class PrimaryButton extends StatelessWidget {
         ),
         child: isLoading
             ? const CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        )
-            : Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if(isLogout) ...[
-                  Image.asset(ImageAssets.logoutImage,
-                      height: MediaQuery.of(context).size.height * 0.035),
-                  SizedBox(width: 4),
-                ],
-                Text(
-                  text,
-                  style: AppTextStyles.buttonText,
-                  overflow: TextOverflow.ellipsis, // optional
-                  textAlign: TextAlign.center,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              )
+            : FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isLogout && !isLogoutText!) ...[
+                      Image.asset(
+                        ImageAssets.logoutImage,
+                        height: MediaQuery.of(context).size.height * 0.035,
+                      ),
+                      SizedBox(width: 4),
+                    ],
+                    Text(
+                      text,
+                      style: AppTextStyles.buttonText,
+                      overflow: TextOverflow.ellipsis, // optional
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
       ),
     );
   }
 }
-

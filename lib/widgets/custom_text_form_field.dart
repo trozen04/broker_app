@@ -43,12 +43,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           controller: widget.controller,
           keyboardType: widget.keyboardType,
           obscureText: widget.obscureText,
-          inputFormatters: widget.keyboardType == TextInputType.phone ||
-        widget.keyboardType == TextInputType.number
+          inputFormatters:
+              widget.keyboardType == TextInputType.phone ||
+                  widget.keyboardType == TextInputType.number
               ? [
-            FilteringTextInputFormatter.digitsOnly, // only digits
-            LengthLimitingTextInputFormatter(10),  // max 10 digits
-          ]
+                  FilteringTextInputFormatter.digitsOnly, // only digits
+                  LengthLimitingTextInputFormatter(10), // max 10 digits
+                ]
               : null,
           validator: (value) {
             final result = widget.validator?.call(value);
@@ -60,7 +61,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: AppTextStyles.hintText,
-
             // ✅ Combined prefix logic (image + custom prefix)
             prefixIcon: Padding(
               padding: const EdgeInsets.only(left: 8, right: 4),
@@ -80,31 +80,64 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 ],
               ),
             ),
-            prefixIconConstraints:
-            const BoxConstraints(minWidth: 0, minHeight: 0),
+            prefixIconConstraints: const BoxConstraints(
+              minWidth: 0,
+              minHeight: 0,
+            ),
 
-            suffixIcon: widget.suffix,
+            suffixIcon: widget.suffix != null
+                ? SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Center(
+                      child: widget.suffix is Icon
+                          ? IconTheme(
+                              data: const IconThemeData(
+                                size: 25,
+                                color: AppColors.primaryColor,
+                              ),
+                              child: widget.suffix!,
+                            )
+                          : (widget.suffix is Image
+                                ? SizedBox(
+                                    height: 25,
+                                    width: 25,
+                                    child: widget.suffix!,
+                                  )
+                                : widget.suffix!),
+                    ),
+                  )
+                : null,
+
             filled: true,
-            fillColor: Colors.grey[50],
-            contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            fillColor: Colors.white,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.035,
+              vertical: MediaQuery.of(context).size.height * 0.015,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-              BorderSide(color: AppColors.borderColor.withOpacity(0.5)),
+              borderSide: BorderSide(
+                color: AppColors.borderColor.withOpacity(0.5),
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-              BorderSide(color: AppColors.borderColor.withOpacity(0.5)),
+              borderSide: BorderSide(
+                color: AppColors.borderColor.withOpacity(0.5),
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-              const BorderSide(color: AppColors.primaryColor, width: 2),
+              borderSide: const BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
+              ),
             ),
-            errorStyle:
-            const TextStyle(height: 0, fontSize: 0), // hide default error
+            errorStyle: const TextStyle(
+              height: 0,
+              fontSize: 0,
+            ), // hide default error
           ),
         ),
         if (errorText != null)

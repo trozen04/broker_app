@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shree_ram_broker/utils/app_colors.dart';
 import 'package:shree_ram_broker/widgets/reusable_appbar.dart';
-
 import '../../Constants/app_dimensions.dart';
 import '../../utils/app_routes.dart';
 import '../../utils/flutter_font_styles.dart';
@@ -19,13 +18,13 @@ class Loaddetailspage extends StatelessWidget {
 
     final data = userData;
 
-
     return Scaffold(
-      appBar: ReusableAppBar(
-        title: data['name'] ?? 'Details',
-      ),
+      appBar: ReusableAppBar(title: data['name'] ?? 'Details'),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,28 +33,36 @@ class Loaddetailspage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    data['name'],
-                    style: AppTextStyles.cardHeading,
-                  ),
-                  //if (data['contactNumber'] != null && data['contactNumber'].toString().isNotEmpty)
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.01),
+                  Text(data['name'], style: AppTextStyles.cardHeading),
+
+                  // if (data['contactNumber'] != null && data['contactNumber'].toString().isNotEmpty)
+                  InkWell(
+                    onTap: () {
+                      //makePhoneCall(data['contactNumber'].toString());
+                      makePhoneCall('9999999999', context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.035,
+                        vertical: height * 0.01,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primaryColor.withOpacity(0.16),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.call, color: AppColors.primaryColor, size: width * 0.045),
-                          SizedBox(width: 4),
-                          Text(
-                            'Call now',
-                            style: AppTextStyles.bodyText,
+                          Icon(
+                            Icons.call,
+                            color: AppColors.primaryColor,
+                            size: width * 0.045,
                           ),
+                          const SizedBox(width: 4),
+                          Text('Call now', style: AppTextStyles.bodyText),
                         ],
                       ),
                     ),
+                  ),
                 ],
               ),
             AppDimensions.h20(context),
@@ -72,8 +79,12 @@ class Loaddetailspage extends StatelessWidget {
             AppDimensions.h30(context),
             PrimaryButton(
               text: 'Transport',
-              onPressed: (){
-                Navigator.pushNamed(context, AppRoutes.transportSubmitPage, arguments: data);
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.transportSubmitPage,
+                  arguments: data,
+                );
               },
               isLoading: false,
             ),
@@ -82,14 +93,10 @@ class Loaddetailspage extends StatelessWidget {
       ),
     );
   }
-
-  // Format keys like 'vehicleNumber' -> 'Vehicle Number'
-  String _formatLabel(String key) {
-    return key.replaceAllMapped(RegExp(r'([A-Z])'), (match) => ' ${match.group(0)}').capitalize();
-  }
 }
 
 // Extension to capitalize first letter
 extension StringCasingExtension on String {
-  String capitalize() => isEmpty ? '' : '${this[0].toUpperCase()}${substring(1)}';
+  String capitalize() =>
+      isEmpty ? '' : '${this[0].toUpperCase()}${substring(1)}';
 }

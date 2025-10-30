@@ -72,7 +72,10 @@ class _TransportationScreenState extends State<TransportationScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+      padding: EdgeInsets.symmetric(
+        horizontal: width * 0.035,
+        vertical: height * 0.015,
+      ),
       child: Column(
         children: [
           // Custom search field
@@ -81,10 +84,16 @@ class _TransportationScreenState extends State<TransportationScreen> {
             decoration: InputDecoration(
               hintText: 'Search',
               hintStyle: AppTextStyles.searchFieldFont,
-              prefixIcon: const Icon(Icons.search, color: AppColors.primaryColor,),
+              prefixIcon: const Icon(
+                Icons.search,
+                color: AppColors.primaryColor,
+              ),
               filled: true,
               fillColor: AppColors.primaryColor.withOpacity(0.16),
-              contentPadding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.01),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: width * 0.035,
+                vertical: height * 0.015,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(61),
                 borderSide: BorderSide.none,
@@ -111,7 +120,10 @@ class _TransportationScreenState extends State<TransportationScreen> {
                         style: AppTextStyles.dateText,
                       ),
                       const SizedBox(width: 8),
-                      Icon(Icons.calendar_month_outlined, color: AppColors.primaryColor),
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        color: AppColors.primaryColor,
+                      ),
                     ],
                   ),
                 ),
@@ -130,13 +142,18 @@ class _TransportationScreenState extends State<TransportationScreen> {
                 const SizedBox(width: 10),
 
                 CustomRoundedButton(
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.newTransportationScreen),
-                  child: Text('New Transportation', style: AppTextStyles.dateText),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AppRoutes.newTransportationScreen,
+                  ),
+                  child: Text(
+                    'New Transportation',
+                    style: AppTextStyles.dateText,
+                  ),
                 ),
               ],
             ),
           ),
-
 
           AppDimensions.h20(context),
 
@@ -145,10 +162,16 @@ class _TransportationScreenState extends State<TransportationScreen> {
             children: List.generate(homeCardsData.length, (index) {
               final data = homeCardsData[index];
               return Padding(
-                padding: EdgeInsets.only(bottom: AppDimensions.h10(context).height!),
+                padding: EdgeInsets.only(
+                  bottom: AppDimensions.h10(context).height!,
+                ),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.transportDetailsPage, arguments: data);
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.transportDetailsPage,
+                      arguments: data,
+                    );
                   },
                   child: HomeInfoCard(
                     cardType: data['cardType'],
@@ -166,8 +189,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                 ),
               );
             }),
-          )
-
+          ),
         ],
       ),
     );

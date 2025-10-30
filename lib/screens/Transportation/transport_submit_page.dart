@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shree_ram_broker/utils/app_colors.dart';
 import 'package:shree_ram_broker/utils/flutter_font_styles.dart';
+import 'package:shree_ram_broker/utils/image_assets.dart';
 import 'package:shree_ram_broker/widgets/primary_button.dart';
 import 'package:shree_ram_broker/widgets/reusable_appbar.dart';
-
 import '../../Constants/app_dimensions.dart';
+import '../../widgets/custom_text_form_field.dart';
 import '../../widgets/reusable_functions.dart';
-
 
 class TransportSubmitPage extends StatefulWidget {
   final dynamic data;
@@ -27,6 +27,9 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
   final List<String> factories = ['Factory A', 'Factory B', 'Factory C'];
   final List<String> transportModes = ['Road', 'Rail', 'Air'];
 
+  final TextEditingController _vehicleNoController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -35,14 +38,17 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
       appBar: ReusableAppBar(title: 'Transportation'),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-            horizontal: width * 0.035, vertical: height * 0.015),
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildLabel('Select Factory'),
+              _buildLabel('Factory'),
               ReusableDropdown(
+                hintText: 'Select Factory',
                 items: factories,
                 value: selectedFactory,
                 onChanged: (value) {
@@ -51,13 +57,13 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
                   });
                 },
                 validator: (value) =>
-                value == null ? 'Please select a factory' : null,
+                    value == null ? 'Please select a factory' : null,
               ),
-
               AppDimensions.h10(context),
 
               _buildLabel('Transport Mode'),
               ReusableDropdown(
+                hintText: 'Select Transport Mode',
                 items: transportModes,
                 value: selectedTransportMode,
                 onChanged: (value) {
@@ -66,21 +72,18 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
                   });
                 },
                 validator: (value) =>
-                value == null ? 'Please select transport mode' : null,
+                    value == null ? 'Please select transport mode' : null,
               ),
-
               AppDimensions.h10(context),
 
               _buildLabel('Vehicle No.'),
-              _buildTextField(
-                hint: 'Enter Vehicle Number',
-                onChanged: (value) => vehicleNo = value,
-                height: height,
-                width: width,
-                validator: (value) =>
-                (value == null || value.isEmpty) ? 'Enter vehicle no.' : null,
+              CustomTextFormField(
+                controller: _vehicleNoController,
+                hintText: 'Enter Vehicle Number',
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Enter vehicle no.'
+                    : null,
               ),
-
               AppDimensions.h10(context),
 
               _buildLabel('Delivery Date'),
@@ -95,17 +98,20 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
                   if (pickedDate != null) {
                     setState(() {
                       deliveryDate = pickedDate;
+                      _dateController.text = '${pickedDate.toLocal()}'.split(
+                        ' ',
+                      )[0];
                     });
                   }
                 },
                 child: AbsorbPointer(
-                  child: _buildTextField(
-                    hint: deliveryDate == null
-                        ? 'Select Delivery Date'
-                        : '${deliveryDate!.toLocal()}'.split(' ')[0],
-                    icon: Icons.calendar_month_sharp,
-                    height: height,
-                    width: width,
+                  child: CustomTextFormField(
+                    controller: _dateController,
+                    hintText: 'Select Delivery Date',
+                    suffix: Image.asset(
+                      ImageAssets.calender,
+                      height: height * 0.015,
+                    ),
                     validator: (_) => deliveryDate == null
                         ? 'Please select delivery date'
                         : null,
@@ -116,18 +122,19 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
               AppDimensions.h30(context),
 
               PrimaryButton(
-                  text: 'Submit',
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print({
-                        'Factory': selectedFactory,
-                        'Transport Mode': selectedTransportMode,
-                        'Vehicle No': vehicleNo,
-                        'Vehicle Name': vehicleName,
-                        'Delivery Date': deliveryDate,
-                      });
-                    }
-                  })
+                text: 'Submit',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    print({
+                      'Factory': selectedFactory,
+                      'Transport Mode': selectedTransportMode,
+                      'Vehicle No': _vehicleNoController.text,
+                      'Vehicle Name': vehicleName,
+                      'Delivery Date': deliveryDate,
+                    });
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -135,47 +142,10 @@ class _TransportSubmitPageState extends State<TransportSubmitPage> {
     );
   }
 
-  // Helper widgets
   Widget _buildLabel(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6.0),
       child: Text(text, style: AppTextStyles.label),
     );
   }
-
-// _buildTextField method
-  Widget _buildTextField({
-    String? hint,
-    IconData? icon,
-    Function(String)? onChanged,
-    required double height,
-    required double width,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      onChanged: onChanged,
-      validator: validator,
-      decoration: InputDecoration(
-        isDense: true,
-        hintText: hint,
-        hintStyle: AppTextStyles.hintText,
-        suffixIcon:
-        icon != null ? Icon(icon, color: AppColors.primaryColor) : null,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: width * 0.035,
-          vertical: height * 0.01,
-        ),
-        errorStyle: const TextStyle(
-          height: 1,
-          color: Colors.red,
-        ),
-        errorMaxLines: 2,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.cardBorder),
-        ),
-      ),
-    );
-  }
-
 }

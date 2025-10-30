@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       body: ListView(
         padding: EdgeInsets.symmetric(
           horizontal: width * 0.035,
@@ -58,57 +57,69 @@ class _HomeScreenState extends State<HomeScreen> {
           if (leads.isNotEmpty) ...[
             Text('My Leads', style: AppTextStyles.headingsFont),
             AppDimensions.h10(context),
-            ...leads.map((data) => Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.loadDetailsPage, arguments: data);
-                  },
-                  child: HomeInfoCard(
-                    cardType: data['cardType'],
-                    name: data['name'],
-                    date: data['date'],
-                    location: data['location'],
-                    quantity: data['quantity'],
-                    item: data['item'],
-                    price: data['price'],
-                    vehicleNumber: data['vehicleNumber'],
-                    driverName: data['driverName'],
-                    height: height,
-                    width: width,
+            ...leads.map(
+              (data) => Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.loadDetailsPage,
+                        arguments: data,
+                      );
+                    },
+                    child: HomeInfoCard(
+                      cardType: data['cardType'],
+                      name: data['name'],
+                      date: data['date'],
+                      location: data['location'],
+                      quantity: data['quantity'],
+                      item: data['item'],
+                      price: data['price'],
+                      vehicleNumber: data['vehicleNumber'],
+                      driverName: data['driverName'],
+                      height: height,
+                      width: width,
+                    ),
                   ),
-                ),
-                AppDimensions.h10(context),
-              ],
-            )),
+                  AppDimensions.h10(context),
+                ],
+              ),
+            ),
           ],
 
           if (transportations.isNotEmpty) ...[
             Text('Transportation', style: AppTextStyles.headingsFont),
             AppDimensions.h10(context),
-            ...transportations.map((data) => Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.transportDetailsPage, arguments: data);
-                  },
-                  child: HomeInfoCard(
-                    cardType: data['cardType'],
-                    name: data['name'],
-                    date: data['date'],
-                    location: data['location'],
-                    quantity: data['quantity'],
-                    item: data['item'],
-                    price: data['price'],
-                    vehicleNumber: data['vehicleNumber'],
-                    driverName: data['driverName'],
-                    height: height,
-                    width: width,
+            ...transportations.map(
+              (data) => Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.transportDetailsPage,
+                        arguments: data,
+                      );
+                    },
+                    child: HomeInfoCard(
+                      cardType: data['cardType'],
+                      name: data['name'],
+                      date: data['date'],
+                      location: data['location'],
+                      quantity: data['quantity'],
+                      item: data['item'],
+                      price: data['price'],
+                      vehicleNumber: data['vehicleNumber'],
+                      driverName: data['driverName'],
+                      height: height,
+                      width: width,
+                    ),
                   ),
-                ),
-                AppDimensions.h10(context),
-              ],
-            )),
+                  AppDimensions.h10(context),
+                ],
+              ),
+            ),
           ],
         ],
       ),

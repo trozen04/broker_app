@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shree_ram_broker/utils/app_colors.dart';
 import 'package:shree_ram_broker/utils/flutter_font_styles.dart';
 import 'package:shree_ram_broker/widgets/primary_button.dart';
 import 'package:shree_ram_broker/widgets/reusable_appbar.dart';
 import '../../Constants/app_dimensions.dart';
-import 'package:flutter/services.dart';
-
 import '../../widgets/custom_snackbar.dart';
+import '../../widgets/custom_text_form_field.dart';
 
 class AddNewPurchaseRequest extends StatefulWidget {
   const AddNewPurchaseRequest({super.key});
@@ -24,6 +24,8 @@ class _AddNewPurchaseRequestState extends State<AddNewPurchaseRequest> {
   String? address;
   String? cityTown;
   String? quantity;
+
+  final _phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,75 +45,68 @@ class _AddNewPurchaseRequestState extends State<AddNewPurchaseRequest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLabel('Paddy Type'),
-              _buildTextField(
-                hint: 'Enter Type',
-                onChanged: (val) => paddyType = val,
+              CustomTextFormField(
+                hintText: 'Enter Type',
                 validator: (val) =>
-                (val == null || val.isEmpty) ? 'Enter Paddy Type' : null,
-                width: width,
-                height: height,
+                    (val == null || val.isEmpty) ? 'Enter Paddy Type' : null,
+                controller: TextEditingController(),
               ),
               AppDimensions.h10(context),
 
               _buildLabel('Name'),
-              _buildTextField(
-                hint: 'Enter Name',
-                onChanged: (val) => name = val,
+              CustomTextFormField(
+                hintText: 'Enter Name',
                 validator: (val) =>
-                (val == null || val.isEmpty) ? 'Enter Name' : null,
-                width: width,
-                height: height,
+                    (val == null || val.isEmpty) ? 'Enter Name' : null,
               ),
               AppDimensions.h10(context),
 
               _buildLabel('Mobile Number'),
-              _buildTextField(
-                hint: 'Enter Phone Number',
+              CustomTextFormField(
+                controller: _phoneController,
+                hintText: 'Enter Phone Number',
                 keyboardType: TextInputType.phone,
-                onChanged: (val) => phone = val,
                 validator: (val) {
                   if (val == null || val.isEmpty) return 'Enter Phone Number';
                   if (val.length < 10) return 'Enter valid number';
                   return null;
                 },
-                width: width,
-                height: height,
-                onlyNumbers: true,
-                prefix: '+91 ',
+                prefix: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 4.0),
+                  child: Text(
+                    '+91',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
               AppDimensions.h10(context),
 
               _buildLabel('Address'),
-              _buildTextField(
-                hint: 'Enter Address',
-                onChanged: (val) => address = val,
+              CustomTextFormField(
+                hintText: 'Enter Address',
                 validator: (val) =>
-                (val == null || val.isEmpty) ? 'Enter Address' : null,
-                width: width,
-                height: height,
+                    (val == null || val.isEmpty) ? 'Enter Address' : null,
               ),
               AppDimensions.h10(context),
 
               _buildLabel('City/Town'),
-              _buildTextField(
-                hint: 'Enter City/Town',
-                onChanged: (val) => cityTown = val,
+              CustomTextFormField(
+                hintText: 'Enter City/Town',
                 validator: (val) =>
-                (val == null || val.isEmpty) ? 'Enter City/Town' : null,
-                width: width,
-                height: height,
+                    (val == null || val.isEmpty) ? 'Enter City/Town' : null,
               ),
               AppDimensions.h10(context),
 
               _buildLabel('Quantity'),
-              _buildTextField(
-                hint: 'Enter Quantity',
+              CustomTextFormField(
+                hintText: 'Enter Quantity',
                 keyboardType: TextInputType.number,
-                onChanged: (val) => quantity = val,
                 validator: (val) =>
-                (val == null || val.isEmpty) ? 'Enter Quantity' : null,
-                width: width,
-                height: height,
+                    (val == null || val.isEmpty) ? 'Enter Quantity' : null,
               ),
               AppDimensions.h30(context),
 
@@ -119,15 +114,15 @@ class _AddNewPurchaseRequestState extends State<AddNewPurchaseRequest> {
                 text: 'Submit',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // ✅ All fields valid
                     print({
                       'Paddy Type': paddyType,
                       'Name': name,
-                      'Phone': phone,
+                      'Phone': '+91${_phoneController.text}',
                       'Address': address,
                       'City': cityTown,
                       'Quantity': quantity,
                     });
+
                     CustomSnackBar.show(
                       context,
                       message: "Form Submitted Successfully!",
@@ -146,39 +141,4 @@ class _AddNewPurchaseRequestState extends State<AddNewPurchaseRequest> {
     padding: const EdgeInsets.only(bottom: 6.0),
     child: Text(text, style: AppTextStyles.label),
   );
-
-
-  Widget _buildTextField({
-    String? hint,
-    TextInputType? keyboardType,
-    Function(String)? onChanged,
-    String? Function(String?)? validator,
-    required double height,
-    required double width,
-    bool onlyNumbers = false,
-    String? prefix,
-  }) {
-    return TextFormField(
-      keyboardType: keyboardType,
-      onChanged: onChanged,
-      validator: validator,
-      inputFormatters: onlyNumbers
-          ? [FilteringTextInputFormatter.allow(RegExp(r'^\+?[0-9]*$'))]
-          : null,
-
-      decoration: InputDecoration(
-        isDense: true,
-        hintText: hint,
-        hintStyle: AppTextStyles.hintText,
-        prefixText: prefix,
-        contentPadding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.01),
-        errorStyle: const TextStyle(height: 1, color: Colors.red),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.cardBorder),
-        ),
-      ),
-    );
-  }
-
 }

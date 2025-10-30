@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../widgets/reusable_appbar.dart';
-import '../../widgets/reusable_functions.dart';
+
+import '../../../widgets/reusable_appbar.dart';
+import '../../../widgets/reusable_functions.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -25,7 +26,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: const ReusableAppBar(title: 'Notification'),
       body: ListView.builder(
         itemCount: notifications.length,
-        padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
         itemBuilder: (context, index) {
           return ReusableNotificationCard(
             title: 'Notification1',

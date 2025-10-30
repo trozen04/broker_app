@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shree_ram_broker/screens/DetailsPages/loadDetailsPage.dart';
+import 'package:shree_ram_broker/screens/DetailsPages/leadDetailsPage.dart';
 import 'package:shree_ram_broker/screens/NewPurchaseRequest/add_new_purchase_request.dart';
 import 'package:shree_ram_broker/screens/auth/login_screen.dart';
 import '../screens/DashboardScreens/home/home.dart';
@@ -20,33 +20,23 @@ class AppRoutes {
   static const String newTransportationScreen = '/newTransportationScreen';
   static const String notificationScreen = '/notificationScreen';
 
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case login:
-         return _buildPageRoute(const LoginScreen(), settings);
+        return _buildPageRoute(const LoginScreen(), settings);
       case register:
         return _buildPageRoute(const RegistrationScreen(), settings);
       case home:
         return _buildPageRoute(const HomeScreen(), settings);
       case loadDetailsPage:
         final userData = settings.arguments;
-        return _buildPageRoute(
-          Loaddetailspage(userData: userData),
-          settings,
-        );
+        return _buildPageRoute(Loaddetailspage(userData: userData), settings);
       case transportSubmitPage:
         final data = settings.arguments;
-        return _buildPageRoute(
-          TransportSubmitPage(data: data),
-          settings,
-        );
+        return _buildPageRoute(TransportSubmitPage(data: data), settings);
       case transportDetailsPage:
         final data = settings.arguments;
-        return _buildPageRoute(
-          TransportDetailsPage(userData: data),
-          settings,
-        );
+        return _buildPageRoute(TransportDetailsPage(userData: data), settings);
       case addNewPurchaseRequestPage:
         return _buildPageRoute(const AddNewPurchaseRequest(), settings);
       case newTransportationScreen:
@@ -54,9 +44,8 @@ class AppRoutes {
       case notificationScreen:
         return _buildPageRoute(const NotificationScreen(), settings);
 
-
       default:
-        return _buildPageRoute(const RegistrationScreen(), settings); // Changed to DashboardScreen
+        return _buildPageRoute(const RegistrationScreen(), settings);
     }
   }
 
@@ -69,8 +58,10 @@ class AppRoutes {
       transitionsBuilder: (_, animation, secondaryAnimation, child) {
         const beginOffset = Offset(1.0, 0.0);
         const endOffset = Offset.zero;
-        final tween = Tween(begin: beginOffset, end: endOffset)
-            .chain(CurveTween(curve: Curves.easeOutCubic));
+        final tween = Tween(
+          begin: beginOffset,
+          end: endOffset,
+        ).chain(CurveTween(curve: Curves.easeOutCubic));
 
         return FadeTransition(
           opacity: animation,

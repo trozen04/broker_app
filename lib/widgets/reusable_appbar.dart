@@ -30,12 +30,12 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: showBackButton
           ? GestureDetector(
-        onTap: () => Navigator.pop(context),
-        child: Image.asset(
-          ImageAssets.backButton,
-          width: screenWidth * 0.06,
-        ),
-      )
+              onTap: () => Navigator.pop(context),
+              child: Image.asset(
+                ImageAssets.backButton,
+                width: screenWidth * 0.06,
+              ),
+            )
           : null,
       title: Text(
         title,

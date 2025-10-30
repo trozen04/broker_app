@@ -17,7 +17,9 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.primaryColor,
-      padding: const EdgeInsets.symmetric(vertical: 6), // optional extra padding
+      padding: const EdgeInsets.symmetric(
+        vertical: 6,
+      ), // optional extra padding
       child: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: onItemTapped,
@@ -25,8 +27,10 @@ class CustomBottomNavBar extends StatelessWidget {
         backgroundColor: Colors.transparent,
         selectedItemColor: Colors.white,
         unselectedItemColor: AppColors.navbarNotSelected,
-        selectedLabelStyle: AppTextStyles.navbar
-            .copyWith(color: Colors.white, fontSize: 14),
+        selectedLabelStyle: AppTextStyles.navbar.copyWith(
+          color: Colors.white,
+          fontSize: 14,
+        ),
         unselectedLabelStyle: AppTextStyles.navbar.copyWith(fontSize: 12),
         iconSize: 30,
         items: [
@@ -86,5 +90,4 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
     );
   }
-
 }

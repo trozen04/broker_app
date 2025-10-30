@@ -4,6 +4,9 @@ import 'package:shree_ram_broker/widgets/primary_button.dart';
 import '../Constants/app_dimensions.dart';
 import '../utils/app_colors.dart';
 import '../utils/flutter_font_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'custom_snackbar.dart';
 
 String formatAmount(dynamic amount) {
   if (amount == null) return '';
@@ -15,8 +18,6 @@ String formatAmount(dynamic amount) {
     return '₹ ${amount.toString()}';
   }
 }
-
-
 
 class CustomRoundedButton extends StatelessWidget {
   final Widget child;
@@ -38,7 +39,8 @@ class CustomRoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double defaultHeight = height ?? MediaQuery.of(context).size.height * 0.055;
+    final double defaultHeight =
+        height ?? MediaQuery.of(context).size.height * 0.055;
     final double width = MediaQuery.of(context).size.width;
 
     return GestureDetector(
@@ -66,7 +68,9 @@ class ProfileRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
+      padding: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.height * 0.01,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -109,9 +113,7 @@ class CustomConfirmationDialog {
             borderRadius: BorderRadius.circular(16),
           ),
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: maxDialogHeight,
-            ),
+            constraints: BoxConstraints(maxHeight: maxDialogHeight),
             child: SingleChildScrollView(
               padding: EdgeInsets.all(padding),
               child: Column(
@@ -145,7 +147,7 @@ class CustomConfirmationDialog {
                           ),
                         ),
                       ),
-                       SizedBox(width: padding),
+                      SizedBox(width: padding),
                       Expanded(
                         child: SizedBox(
                           height: buttonHeight,
@@ -153,6 +155,7 @@ class CustomConfirmationDialog {
                             text: confirmText,
                             onPressed: () => Navigator.pop(context, true),
                             isLogout: confirmColor == AppColors.logoutColor,
+                            isLogoutText: true,
                           ),
                         ),
                       ),
@@ -174,6 +177,7 @@ class CustomConfirmationDialog {
 class ReusableDropdown extends StatelessWidget {
   final List<String> items;
   final String? value;
+  final String? hintText;
   final Function(String?) onChanged;
   final String? Function(String?)? validator;
 
@@ -181,6 +185,7 @@ class ReusableDropdown extends StatelessWidget {
     super.key,
     required this.items,
     required this.value,
+    required this.hintText,
     required this.onChanged,
     this.validator,
   });
@@ -190,10 +195,11 @@ class ReusableDropdown extends StatelessWidget {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         isDense: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.035,
+          vertical: MediaQuery.of(context).size.height * 0.015,
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         errorStyle: const TextStyle(
           height: 1, // reduce vertical gap
           color: Colors.red,
@@ -202,14 +208,17 @@ class ReusableDropdown extends StatelessWidget {
       ),
       value: value,
       items: items
-          .map((item) => DropdownMenuItem<String>(
-        value: item,
-        child: Text(item, style: AppTextStyles.hintText),
-      ))
+          .map(
+            (item) => DropdownMenuItem<String>(
+              value: item,
+              child: Text(item, style: AppTextStyles.hintText),
+            ),
+          )
           .toList(),
       onChanged: onChanged,
+      icon: Icon(Icons.keyboard_arrow_down_outlined),
       validator: validator,
-      hint: Text('Select option', style: AppTextStyles.hintText),
+      hint: Text(hintText ?? 'Select option', style: AppTextStyles.hintText),
     );
   }
 }
@@ -226,24 +235,24 @@ class ReusablePopup extends StatelessWidget {
     required this.title,
     required this.message,
     required this.buttonText,
-    required this.onButtonPressed, required this.height, required this.width,
+    required this.onButtonPressed,
+    required this.height,
+    required this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.2, vertical: height * 0.035),
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.2,
+          vertical: height * 0.035,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              title,
-              style: AppTextStyles.popupTitle,
-            ),
+            Text(title, style: AppTextStyles.popupTitle),
             AppDimensions.h20(context),
             Text(
               message,
@@ -252,7 +261,7 @@ class ReusablePopup extends StatelessWidget {
               maxLines: 3,
             ),
             AppDimensions.h20(context),
-            PrimaryButton(text: 'okay', onPressed: onButtonPressed)
+            PrimaryButton(text: 'okay', onPressed: onButtonPressed),
           ],
         ),
       ),
@@ -271,45 +280,59 @@ class ReusableNotificationCard extends StatelessWidget {
     required this.title,
     required this.time,
     required this.height,
-    required this.width
+    required this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-     padding: EdgeInsets.symmetric(horizontal: width * 0.035, vertical: height * 0.015),
-     decoration: BoxDecoration(
-       border: Border(
-         bottom: BorderSide(
-           color: AppColors.bottomBorder
-         )
-       )
-     ),
-      child: Row(
+      padding: EdgeInsets.symmetric(
+        horizontal: width * 0.035,
+        vertical: height * 0.015,
+      ),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: AppColors.bottomBorder)),
+      ),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Notification 1', style: AppTextStyles.label),
-              AppDimensions.h10(context),
-              Text('Monday, 4:41 pm', style: AppTextStyles.dateAndTime)
+              if (true)
+                Icon(Icons.circle, size: 10, color: AppColors.primaryColor)
+              else
+                Text(''),
             ],
           ),
-          Column(
+          AppDimensions.h10(context),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if(true) Icon(Icons.circle, size: 10, color: AppColors.primaryColor,)
-              else Text(''),
-              AppDimensions.h10(context),
-              Text('3 Hours ago', style: AppTextStyles.timeLeft)
+              Text('Monday, 4:41 pm', style: AppTextStyles.dateAndTime),
+              Text('3 Hours ago', style: AppTextStyles.timeLeft),
             ],
-          )
+          ),
         ],
       ),
+    );
+  }
+}
+
+Future<void> makePhoneCall(String phoneNumber, BuildContext context) async {
+  final Uri uri = Uri.parse('tel:$phoneNumber');
+
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } else {
+    CustomSnackBar.show(
+      context,
+      message: "We cannot connect call with $phoneNumber",
+      isError: true,
     );
   }
 }
